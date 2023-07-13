@@ -1,0 +1,10 @@
+<div class="sfondo">
+  <div>
+    <app-navbar (inviaTabEvento)="riceviTab($event)"></app-navbar>
+    <app-home *ngIf="tabAttiva == 'home'"></app-home>
+    <app-form *ngIf="tabAttiva == 'ticket'" class="animate__animated animate__fadeIn" ></app-form>
+    <app-movies *ngIf="tabAttiva == 'movies'"></app-movies>
+
+
+  </div>
+</div>

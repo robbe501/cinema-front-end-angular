@@ -1,0 +1,31 @@
+<ng-template #content let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">Actors</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+    <p *ngFor="let a of actors">
+      {{a.firstName}} {{a.lastName}}
+    </p>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Close</button>
+	</div>
+</ng-template>
+<hr />
+
+<pre>{{ closeResult }}</pre>
+
+
+
+<div class="movie-card-container container">
+  <app-movie-card *ngFor="let film of filmVisibili" [film]="film" (click)="open(content, film.filmId)"></app-movie-card>
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <li class="page-item"><a class="page-link" href="#" (click)="indietro()">Previous</a></li>
+      <li class="page-item"><a class="page-link" href="#" (click)="avanti()">Next</a></li>
+    </ul>
+  </nav>
+</div>
+
+

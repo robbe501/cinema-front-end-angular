@@ -1,0 +1,14 @@
+<div class="container">
+  <div class="pt-4">
+    <h2 class="text-light">Newly released</h2>
+  </div>
+  <div class="contenitore-carosello mt-5">
+    <ngb-carousel *ngIf="films">
+      <ng-template ngbSlide *ngFor="let film of films">
+        <div class="picsum-img-wrapper d-flex justify-content-center m-auto">
+          <img [src]="film.image" alt="Random first slide" class="" />
+        </div>
+      </ng-template>
+    </ngb-carousel>
+  </div>
+</div>

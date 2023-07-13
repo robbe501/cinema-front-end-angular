@@ -1,0 +1,17 @@
+.dimensioni-inner-card{
+  height: 300px !important;
+}
+
+.card{
+  max-width: 800px !important;
+  min-height: 300px !important;
+  background-color: #613794;
+  border-radius: 20px;
+}
+
+.immagine-find{
+  object-fit: cover !important;
+  height: 100% !important;
+  border-radius: 20px;
+  border-radius:20px 0px 0px  20px !important;
+}
