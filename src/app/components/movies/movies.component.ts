@@ -2,11 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
+import { Observable, map } from 'rxjs';
 import { Actor } from 'src/app/interfaces/actor.interface';
 import { Film } from 'src/app/interfaces/film.interface';
 import { MovieService } from 'src/app/service/movie.service';
 import { AppState } from 'src/app/store/app.state';
 import * as movieActions from './store/movie.actions';
+import { MovieState } from './store/movie.state';
 
 @Component({
   selector: 'app-movies',
@@ -26,9 +28,9 @@ export class MoviesComponent implements OnInit{
 
   closeResult = '';
 
-  actors: Actor[] = [
+  actors: Actor[] = [ ];
 
-  ];
+  movies$: Observable<Film[]>;
 
   constructor(private modalService: NgbModal, private http: HttpClient, private movie: MovieService, private store: Store<AppState>)  {
     /* fetch(`${this.ENDPOINT}findAllFilms`)
@@ -40,8 +42,9 @@ export class MoviesComponent implements OnInit{
         })
 
  */
+    this.movies$ = store.select('movies').pipe(map((state: MovieState) => state.list))
 
-    movie.getAll().subscribe((data) => {
+    this.movies$.subscribe((data) => {
       this.films = data;
       this.filmVisibili = [];
       this.filmVisibili = this.films.slice(0, this.filmsPerPage)
