@@ -1,14 +1,19 @@
-import { Component, TemplateRef } from '@angular/core';
-import { Film } from 'src/app/interfaces/film.interface';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Store } from '@ngrx/store';
 import { Actor } from 'src/app/interfaces/actor.interface';
+import { Film } from 'src/app/interfaces/film.interface';
+import { MovieService } from 'src/app/service/movie.service';
+import { AppState } from 'src/app/store/app.state';
+import * as movieActions from './store/movie.actions';
 
 @Component({
   selector: 'app-movies',
   templateUrl: './movies.component.html',
   styleUrls: ['./movies.component.css']
 })
-export class MoviesComponent {
+export class MoviesComponent implements OnInit{
 
   // Pagina corrente e numero di record visualizzati per pagina
   page: number = 0;
@@ -25,14 +30,29 @@ export class MoviesComponent {
 
   ];
 
-  constructor(private modalService: NgbModal) {
-    fetch(`${this.ENDPOINT}findAllFilms`)
+  constructor(private modalService: NgbModal, private http: HttpClient, private movie: MovieService, private store: Store<AppState>)  {
+    /* fetch(`${this.ENDPOINT}findAllFilms`)
         .then((res) => res.json())
         .then((json) => {
             this.films = json;
             this.filmVisibili = [];
             this.filmVisibili = this.films.slice(0, this.filmsPerPage)
         })
+
+ */
+
+    movie.getAll().subscribe((data) => {
+      this.films = data;
+      this.filmVisibili = [];
+      this.filmVisibili = this.films.slice(0, this.filmsPerPage)
+    })
+
+
+
+  }
+
+  ngOnInit() {
+    this.store.dispatch(movieActions.retrieve());
   }
 
   indietro() {
@@ -69,4 +89,5 @@ export class MoviesComponent {
           );
         });
 	}
+
 }

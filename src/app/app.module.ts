@@ -1,15 +1,19 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { HttpClientModule } from '@angular/common/http';
+import { NgbCarouselModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 import { AppComponent } from './app.component';
-import { NgbModule, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
-import { HomeComponent } from './components/home/home.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { CaroselloComponent } from './components/carosello/carosello.component';
 import { CardComponent } from './components/card/card.component';
+import { CaroselloComponent } from './components/carosello/carosello.component';
 import { FormComponent } from './components/form/form.component';
-import { MovieCardComponent } from './components/movie-card/movie-card.component';
-import { MoviesComponent } from './components/movies/movies.component';
+import { HomeComponent } from './components/home/home.component';
+import { MoviesModule } from './components/movies/movies.module';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { appReducer } from './store/app.reducer';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [
@@ -19,14 +23,16 @@ import { MoviesComponent } from './components/movies/movies.component';
     CaroselloComponent,
     CardComponent,
     FormComponent,
-    MovieCardComponent,
-    MoviesComponent,
-
   ],
   imports: [
     BrowserModule,
+    MoviesModule,
     NgbModule,
-    NgbCarouselModule
+    NgbCarouselModule,
+    StoreModule.forRoot(appReducer),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+    HttpClientModule,
+    EffectsModule.forRoot([]),
   ],
   providers: [],
   bootstrap: [AppComponent]
